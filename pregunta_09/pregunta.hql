@@ -63,7 +63,7 @@ AS
             temp2
         )d1
     ON
-        (d0.c1 = d1.c1, d0.c2 = d1.key);
+        (d0.c1 = d1.c1 AND d0.c2 = d1.key);
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT d0.c1,d0.c2,d1.value FROM word_count;
