@@ -55,7 +55,7 @@ CREATE TABLE temp1
 AS
     SELECT c1, c2 as key
     FROM
-        tbl1;
+        tbl0;
 CREATE TABLE word_count
 AS
     SELECT d0.c1, d0.key, d1.c1, d1.key , d1.value
