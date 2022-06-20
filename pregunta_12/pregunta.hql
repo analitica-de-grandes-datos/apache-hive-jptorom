@@ -30,15 +30,9 @@ CREATE TABLE t0 (
         LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
-CREATE TABLE word_count
-AS
-    SELECT word, key, value
-    FROM
-        (SELECT word,c3
-        FROM
-            t0 LATERAL VIEW explode(c2) adTable AS word) temp
-            temp LATERAL VIEW explode(c3);
+CREATE TABLE word_count AS SELECT word, key, value FROM (SELECT word, c3 FROM t0 LATERAL VIEW explode(c2) t0 AS word ) temp
+LATERAL VIEW explode (c3) temp;
 
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT word, key, COUNT(1) FROM datos GROUP BY word, key
+SELECT word, key, COUNT(1) FROM word_count GROUP BY word, key ;
