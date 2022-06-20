@@ -30,9 +30,9 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 
 CREATE TABLE word_count
 AS
-        SELECT UPPER(c5) as valores
-        FROM
-            tbl0;
+    SELECT UPPER(c5) as valores
+    FROM
+        tbl0;
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM word_count;
