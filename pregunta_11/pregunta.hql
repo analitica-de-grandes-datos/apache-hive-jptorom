@@ -27,7 +27,7 @@ CREATE TABLE t0 (
         LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
-CREATE word_count
+CREATE TABLE word_count
 AS
     SELECT c1,SIZE(c2), SIZE(c3)
     FROM
