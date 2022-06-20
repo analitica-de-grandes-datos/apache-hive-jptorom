@@ -50,7 +50,7 @@ AS
     SELECT c1, key,value
     FROM
         tbl1 LATERAL VIEW explode(c4) adTable;
-CREATE word_count
+CREATE TABLE word_count
 AS
     SELECT d0.c1, d0.c2, d1.c1, d1.key , d1.value
     FROM
