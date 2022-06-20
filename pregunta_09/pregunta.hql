@@ -11,7 +11,6 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
 */
-
 DROP TABLE IF EXISTS tbl0;
 CREATE TABLE tbl0 (
     c1 INT,
@@ -54,10 +53,12 @@ CREATE TABLE word_count
 AS
     SELECT d0.c1, d0.c2, d1.c1, d1.key , d1.value
     FROM
-        tbl0
+        tbl0 d0
     JOIN(
         SELECT
-            *
+            c1,
+            key,
+            value
         FROM
             temp2
         )d1
