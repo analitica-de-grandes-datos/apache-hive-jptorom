@@ -12,7 +12,6 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
 */
-
 DROP TABLE IF EXISTS tbl0;
 DROP TABLE IF EXISTS word_count;
 CREATE TABLE tbl0 (
@@ -34,7 +33,7 @@ CREATE TABLE word_count
 AS
     SELECT c2, key, value
     FROM
-        tbl0 LATERAL VIEW explode(c6) adTable AS unico;
+        tbl0 LATERAL VIEW explode(c6) adTable;
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT c2, SUM(value) FROM word_count GROUP BY c2;
