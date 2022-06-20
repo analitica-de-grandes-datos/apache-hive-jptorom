@@ -17,7 +17,7 @@ Escriba el resultado a la carpeta `output` de directorio de trabajo.
 */
 
 DROP TABLE IF EXISTS t0;
-DROP TABLE IF EXISTS word_count;
+DROP TABLE IF EXISTS wordcount;
 CREATE TABLE t0 (
     c1 STRING,
     c2 ARRAY<CHAR(1)>, 
@@ -30,9 +30,9 @@ CREATE TABLE t0 (
         LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
-CREATE TABLE word_count AS SELECT word, key, value FROM (SELECT word, c3 FROM t0 LATERAL VIEW explode(c2) t0 AS word ) temp
+CREATE TABLE wordcount AS SELECT word, key, value FROM (SELECT word, c3 FROM t0 LATERAL VIEW explode(c2) t0 AS word ) temp
 LATERAL VIEW explode (c3) temp;
 
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT word, key, COUNT(1) FROM word_count GROUP BY word, key ;
+SELECT word, key, COUNT(1) FROM wordcount GROUP BY word, key ;
