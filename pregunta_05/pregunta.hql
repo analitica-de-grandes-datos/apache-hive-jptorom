@@ -11,6 +11,7 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
 */
+
 DROP TABLE IF EXISTS tbl0;
 DROP TABLE IF EXISTS word_count;
 CREATE TABLE tbl0 (
@@ -32,7 +33,7 @@ CREATE TABLE word_count
 AS
         SELECT fecha, unico, COUNT(1) AS CONTADOR
         FROM
-            (SELECT explode(c5) AS unico, YEAR(c4) AS fecha FROM tbl0) u
+            (SELECT YEAR(c4) AS fecha FROM tbl0 LATERAL VIEW explode(c5) adTable AS unico,) u
 GROUP BY
         fecha,unico
 ORDER BY
