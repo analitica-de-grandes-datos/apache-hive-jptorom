@@ -33,7 +33,7 @@ CREATE TABLE word_count
 AS
         SELECT fecha, unico, COUNT(1) AS CONTADOR
         FROM
-            (SELECT YEAR(c4) AS fecha FROM tbl0 LATERAL VIEW explode(c5) adTable AS unico,) u
+            (SELECT YEAR(c4) AS fecha FROM tbl0 LATERAL VIEW explode(c5) adTable AS unico) u
 GROUP BY
         fecha,unico
 ORDER BY
