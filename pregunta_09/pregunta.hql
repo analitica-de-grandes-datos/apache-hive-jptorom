@@ -11,6 +11,7 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
 */
+
 DROP TABLE IF EXISTS tbl0;
 CREATE TABLE tbl0 (
     c1 INT,
@@ -43,17 +44,23 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 
 DROP TABLE IF EXISTS word_count;
 DROP TABLE IF EXISTS temp2;
+DROP TABLE IF EXISTS temp1;
 
 CREATE TABLE temp2
 AS
     SELECT c1, key,value
     FROM
         tbl1 LATERAL VIEW explode(c4) adTable;
+CREATE TABLE temp1
+AS
+    SELECT c1, c2 as key
+    FROM
+        tbl1;
 CREATE TABLE word_count
 AS
-    SELECT d0.c1, d0.c2, d1.c1, d1.key , d1.value
+    SELECT d0.c1, d0.key, d1.c1, d1.key , d1.value
     FROM
-        tbl0 d0
+        temp1 d0
     JOIN(
         SELECT
             c1,
@@ -63,7 +70,7 @@ AS
             temp2
         )d1
     ON
-        (d0.c1 = d1.c1 AND d0.c2 = d1.key);
+        (d0.c1 = d1.c1 AND d0.key = d1.key);
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT d0.c1,d0.c2,d1.value FROM word_count;
+SELECT d0.c1,d0.key,d1.value FROM word_count;
