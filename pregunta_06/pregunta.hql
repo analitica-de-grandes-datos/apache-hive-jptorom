@@ -11,7 +11,6 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
 */
-
 DROP TABLE IF EXISTS tbl0;
 DROP TABLE IF EXISTS word_count;
 CREATE TABLE tbl0 (
@@ -31,9 +30,9 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 
 CREATE TABLE word_count
 AS
-        SELECT unico as valores
+        SELECT UPPER(c5) as valores
         FROM
-            (SELECT UPPER(c5) AS unico FROM tbl0) u;
+            tbl0;
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM word_count;
