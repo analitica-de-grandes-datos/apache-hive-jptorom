@@ -30,7 +30,7 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 
 CREATE TABLE word_count
 AS
-    SELECT (YEAR(c4)) AS fecha, unico, COUNT(1) AS CONTADOR
+    SELECT (YEAR(c4)) AS fecha, unico, COUNT(1) AS count
     FROM
         tbl0 LATERAL VIEW explode(c5) adTable AS unico;
 INSERT OVERWRITE LOCAL DIRECTORY './output'
