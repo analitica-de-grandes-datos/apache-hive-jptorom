@@ -30,9 +30,13 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 
 CREATE TABLE word_count
 AS
-    SELECT (YEAR(c4)) AS fecha, unico, count(1) AS count
+    SELECT (YEAR(c4)) AS fecha, unico, COUNT(1) AS CONTADOR
     FROM
-        tbl0 LATERAL VIEW explode(c5) adTable AS unico;
+        tbl0 LATERAL VIEW explode(c5) adTable AS unico
+GROUP BY
+        fecha, unico
+ORDER BY
+        fecha, unico;   
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT * FROM word_count GROUP BY fecha, unico ORDER BY fecha, unico ASC;
+SELECT * FROM word_count;
