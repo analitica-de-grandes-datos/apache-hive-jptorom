@@ -42,7 +42,27 @@ MAP KEYS TERMINATED BY '#'
 LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 
-/*
-    >>> Escriba su respuesta a partir de este punto <<<
-*/
+DROP TABLE IF EXISTS word_count;
+DROP TABLE IF EXISTS temp2;
 
+CREATE TABLE temp2
+AS
+    SELECT c1, key,value
+    FROM
+        tbl1 LATERAL VIEW explode(c4) adTable;
+CREATE word_count
+AS
+    SELECT d0.c1, d0.c2, d1.c1, d1.key , d1.value
+    FROM
+        tbl0
+    JOIN(
+        SELECT
+            *
+        FROM
+            temp2
+        )d1
+    ON
+        (d0.c1 = d1.c1, d0.c2 = d1.key);
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT d0.c1,d0.c2,d1.value FROM word_count;
