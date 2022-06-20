@@ -35,4 +35,4 @@ AS
         tbl0 LATERAL VIEW explode(c5) adTable AS unico;
 INSERT OVERWRITE LOCAL DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT * FROM word_count GROUP BY fecha,unico ORDER BY fecha,unico ASC;
+SELECT * FROM word_count GROUP BY fecha, unico ORDER BY fecha, unico ASC;
